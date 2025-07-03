@@ -1,8 +1,14 @@
-import { Link, Route, Routes } from "react-router-dom";
-import styled from "styled-components";
-import Home from "./components/home";
-import About from "./components/about";
-import Contact from "./components/contact";
+import { Link, Route, Routes } from 'react-router-dom';
+import styled from 'styled-components';
+// import Home from "./components/home";
+// import About from './components/about';
+// import Contact from './components/contact';
+import { lazy, Suspense } from 'react';
+import LazyLoader from './components/lazy-loader';
+
+const Home = lazy(() => import('./components/home'));
+const About = lazy(() => import('./components/about'));
+const Contact = lazy(() => import('./components/contact'));
 
 const AppContainer = styled.div`
   margin: 0 auto;
@@ -28,20 +34,22 @@ const Nav = styled.nav`
 function App() {
   return (
     <AppContainer>
-      <Heading>Advanced React - Codelicks Academy</Heading>
+      <Heading>Practicing advanced React</Heading>
       <NavContainer>
         <Nav>
-          <Link to="/">Home</Link>
-          <Link to="/about">About</Link>
-          <Link to="/contact">Contact</Link>
+          <Link to='/'>Home</Link>
+          <Link to='/about'>About</Link>
+          <Link to='/contact'>Contact</Link>
         </Nav>
       </NavContainer>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
+      <Suspense fallback={<LazyLoader show delay={5000} />}>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/about' element={<About />} />
 
-        <Route path="/contact" element={<Contact />} />
-      </Routes>
+          <Route path='/contact' element={<Contact />} />
+        </Routes>
+      </Suspense>
     </AppContainer>
   );
 }
