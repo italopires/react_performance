@@ -7,7 +7,8 @@ import { lazy, Suspense } from 'react';
 import LazyLoader from './components/lazy-loader';
 
 const Home = lazy(() => import('./components/home'));
-const About = lazy(() => import('./components/about'));
+// const About = lazy(() => import('./components/about'));
+const About = lazy(() => slowImport(() => import('./components/about')));
 const Contact = lazy(() => import('./components/contact'));
 
 const AppContainer = styled.div`
@@ -31,6 +32,12 @@ const Nav = styled.nav`
   justify-content: space-around;
 `;
 
+// Simulates long import
+const slowImport = (loader, delay = 5000) =>
+  new Promise((resolve) => {
+    setTimeout(() => resolve(loader()), delay);
+  });
+
 function App() {
   return (
     <AppContainer>
@@ -42,7 +49,7 @@ function App() {
           <Link to='/contact'>Contact</Link>
         </Nav>
       </NavContainer>
-      <Suspense fallback={<LazyLoader show delay={5000} />}>
+      <Suspense fallback={<LazyLoader show delay={1000} />}>
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/about' element={<About />} />
