@@ -1,4 +1,5 @@
-import styled from "styled-components";
+import { useState } from 'react';
+import styled from 'styled-components';
 
 const StyledFieldset = styled.fieldset`
   display: flex;
@@ -27,15 +28,16 @@ const StyledButton = styled.button`
 `;
 
 const AddIngredient = (props) => {
-  console.log("AddIngredient rendered");
-  const { addIngredient, ingredient, setIngredient } = props;
+  console.log('AddIngredient rendered');
+  const [ingredient, setIngredient] = useState('');
+  const { addIngredient } = props;
 
   return (
-    <form className="">
+    <form className=''>
       <StyledFieldset>
         <label>Add ingredient</label>
         <input
-          type="text"
+          type='text'
           value={ingredient}
           onChange={(e) => setIngredient(e.target.value)}
         />
@@ -46,7 +48,7 @@ const AddIngredient = (props) => {
             e.preventDefault();
             if (!ingredient) return;
             addIngredient(ingredient);
-            setIngredient("");
+            setIngredient('');
           }}
         >
           Add
