@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { nanoid } from 'nanoid';
 import styled from 'styled-components';
 import IngredientsList from './ingredients-list';
-import IngredientsInfoHelper from './ingredients-info-helper';
+// import IngredientsInfoHelper from './ingredients-info-helper';
 import AddIngredient from './add-ingredient';
 
 const StyledContainer = styled.div`
@@ -49,7 +49,7 @@ const initialIngredients = [
   },
 ];
 
-const Ingredients = (props) => {
+const Ingredients = ({ ingredientsInfoHelper }) => {
   console.log('Ingredient rendered');
   const [ingredients, setIngredients] = useState(initialIngredients);
 
@@ -76,7 +76,7 @@ const Ingredients = (props) => {
     <StyledContainer>
       <div>
         {ingredientsHeaderText}
-        <IngredientsInfoHelper />
+        {ingredientsInfoHelper}
       </div>
 
       <StyledSpaceY4>
