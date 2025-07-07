@@ -1,14 +1,15 @@
-import { searchMeals } from "../api/mealApi";
-import React, { useMemo, useState } from "react";
+import { searchMeals } from '../api/mealApi';
+import React, { useMemo, useState } from 'react';
+import { debounce } from '../helpers/debounce';
 
 const Search = () => {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const [meals, setMeals] = useState([]);
 
   const initSearchApiRequest = useMemo(() => {
-    return async (q) => {
+    return debounce(async (q) => {
       setMeals(await searchMeals(q));
-    };
+    }, 3000);
   }, []);
 
   const onChangeQuery = (e) => {
@@ -21,7 +22,7 @@ const Search = () => {
     <div>
       <form>
         <label>Search meals</label>
-        <input type="text" value={query} onChange={onChangeQuery} />
+        <input type='text' value={query} onChange={onChangeQuery} />
       </form>
       <ul>
         {meals?.map((meal) => {
